@@ -1,8 +1,23 @@
-from selenium_driver import driver
-from slack_client import client
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+import slack 
+import os
 import time
 
+chrome_options = Options()
+chrome_options.add_argument('--no-sandbox')
+chrome_options.add_argument('--disable-dev-shm-usage')
+
+driver = webdriver.Chrome(options=chrome_options)
+
 driver.get("https://www.bestbuy.ca/en-ca/product/insignia-portable-air-conditioner-12000-btu-white-grey-only-at-best-buy/11794998")
+
+my_secret = os.environ['slack_token']
+
+
+client = slack.WebClient(token=os.environ['slack_token'])
+
+# client.chat_postMessage(channel='#project', text='helloooo')
 
 def isAvailableText(driver):
   e = driver.find_element_by_css_selector('.storeAvailabilityContainer_1Ez2A > div > span')
